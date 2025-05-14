@@ -1,0 +1,36 @@
+name: 'this is env variable'
+trigger: none
+pool:
+  vmImage: 'ubuntu-latest'
+parameters:
+  - name: USER
+    type: string
+    default: 'ravi'
+    displayName: 'user name'
+  - name: city
+    type: string
+    default: 'delhi'
+    values:
+      - "pune"
+      - "london"
+      - "tokyo"
+      - "noida"
+      - "delhi"
+  - name: isAdmin
+    type: boolean
+    default: false
+    displayName: 'user is admin?'
+stages:
+  - stage: printname
+    jobs:
+      - job: joba
+        steps:
+         - script: echo "Hi my name is ${{ parameters.USER }} and i am living in ${{ parameters.city }}"
+           displayName: 'in string variable'
+         - script: |
+             if [[ "${{ parameters.isAdmin }}" ]]; then
+              echo "${{ parameters.USER }} is an Admin"
+             else
+              echo "${{ parameters.USER }} is not an Admin "
+             fi
+           displayName: 'check admin status'

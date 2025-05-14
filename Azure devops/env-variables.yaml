@@ -1,0 +1,18 @@
+name: 'this is env variable'
+trigger: none
+pool:
+  vmImage: 'ubuntu-latest'
+variables:
+  - name: USER
+    value: 'soni'
+  - name: CITY
+    value: 'delhi'
+stages:
+  - stage: printname
+    jobs:
+      - job: joba
+        steps:
+          - script: echo "Hi i am ${{ variables.USER }} i live in ${{ variables.CITY }}"
+            displayName: 'print new variables value'
+          - script: echo ${ USER }
+            displayName: 'Print only user variable'

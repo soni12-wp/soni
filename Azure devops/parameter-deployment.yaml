@@ -1,0 +1,40 @@
+name: 'this is parameter in deployment'
+trigger: none
+pool:
+  vmImage: 'ubuntu-latest'
+parameters:
+  - name: PLATFORM
+    type: string
+    default: 'prod'
+    values:
+      - "dev"
+      - "stg"
+      - "prod"
+stages:
+  - stage: 'newparameterdeploy'
+    jobs:
+      - deployment: jobatoprintparameter
+        condition: ${{ eq(parameters.PLATFORM , 'dev') }}
+        environment: AzureEnv
+        strategy:
+          runOnce:
+            deploy:
+        steps:
+          - script: echo "This is deployment to ${{ parameters.PLATFORM }}"
+      - deployment: jobs
+        condition: ${{ eq(parameters.PLATFORM , 'stg') }}
+        environment: AzureEnv
+        strategy:
+          runOnce:
+            deploy:
+        steps:
+          - script: echo "This is deployment to ${{ parameters.PLATFORM }}"
+      - deployment: jobd
+        condition: ${{ eq(parameters.PLATFORM , 'prod') }}
+        environment: AzureEnv
+        strategy:
+          runOnce:
+            deploy:
+        steps:
+          - script: echo "This is deployment to ${{ parameters.PLATFORM }}"
+      
