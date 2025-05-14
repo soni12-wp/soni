@@ -1,0 +1,18 @@
+trigger: none
+pool:
+  vmImage: 'ubuntu-latest'
+stages:
+  - stage:
+    jobs:
+      - job: joba
+        steps:
+          - script: echo "New multijob1"
+            displayName: 'Execution1'
+      - job: jobb
+        steps:
+          - script: echo "New multijob2"
+            displayName: 'execution2'
+      - job: jobc
+        steps:
+          - script: echo "New multijob2"
+            displayName: 'execution2'

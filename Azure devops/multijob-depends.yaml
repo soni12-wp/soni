@@ -1,0 +1,24 @@
+trigger: none
+stages:
+  - stage:
+    jobs:
+      - job: joba
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - script: echo "print joba"
+            displayName: 'New multi depend job A'
+      - job: jobb
+        dependsOn: joba
+        pool:
+          vmImage: 'macos-latest'
+        steps:
+          - script: echo " Print job b"
+            displayName: 'New multi job B'
+      - job: jobc
+        dependsOn: jobb
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - script: echo "print jobc"
+            displayName: 'New Multi Job c'          
