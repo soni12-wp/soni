@@ -4,7 +4,7 @@ terraform {
         Source = "hashicorp/aws"
         Version = "5.94.1"
     }
-    OCI = {
+    oci = {
         Source = "Oracle/oci"
         Version = "6.35.0"
     }
@@ -14,6 +14,6 @@ terraform {
 provider "aws" {
     #configuration 
 }
-provider "OCI" {
+provider "oci" {
   #configuration
 }
