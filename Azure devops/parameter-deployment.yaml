@@ -11,7 +11,7 @@ parameters:
       - "stg"
       - "prod"
 stages:
-  - stage: 'newparameterdeploy'
+  - stage: newparameterdeploy
     jobs:
       - deployment: jobatoprintparameter
         condition: ${{ eq(parameters.PLATFORM , 'dev') }}
@@ -19,22 +19,26 @@ stages:
         strategy:
           runOnce:
             deploy:
-        steps:
-          - script: echo "This is deployment to ${{ parameters.PLATFORM }}"
-      - deployment: jobs
+              steps:
+                - script: echo "This is deployment to ${{ parameters.PLATFORM }}"
+  - stage: stgjob
+    jobs:
+      - deployment: jobprod
         condition: ${{ eq(parameters.PLATFORM , 'stg') }}
         environment: AzureEnv
         strategy:
           runOnce:
             deploy:
-        steps:
-          - script: echo "This is deployment to ${{ parameters.PLATFORM }}"
+              steps:
+                - script: echo "This is deployment to ${{ parameters.PLATFORM }}"
+  - stage:
+    jobs:
       - deployment: jobd
         condition: ${{ eq(parameters.PLATFORM , 'prod') }}
         environment: AzureEnv
         strategy:
           runOnce:
             deploy:
-        steps:
-          - script: echo "This is deployment to ${{ parameters.PLATFORM }}"
+              steps:
+                - script: echo "This is deployment to ${{ parameters.PLATFORM }}"
       
