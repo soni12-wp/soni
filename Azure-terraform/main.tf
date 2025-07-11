@@ -108,7 +108,7 @@ resource "azurerm_storage_account" "my_storage_account" {
 
 # Create virtual machine
 resource "azurerm_windows_virtual_machine" "main-azure" {
-  name                  = "${var.prefix}-vm"
+  name                  = "my-winds-vm"
   admin_username        = "azureuser"
   admin_password        = random_password.password.result
   location              = azurerm_resource_group.azure-resource.location
@@ -135,21 +135,7 @@ resource "azurerm_windows_virtual_machine" "main-azure" {
   }
 }
 
-# Install IIS web server to the virtual machine
-resource "azurerm_virtual_machine_extension" "web_server_install" {
-  name                       = "${random_pet.prefix.id}-wsi"
-  virtual_machine_id         = azurerm_windows_virtual_machine.main-azure.id
-  publisher                  = "Microsoft.Compute"
-  type                       = "CustomScriptExtension"
-  type_handler_version       = "1.8"
-  auto_upgrade_minor_version = true
 
-  settings = <<SETTINGS
-    {
-      "commandToExecute": "powershell -ExecutionPolicy Unrestricted Install-WindowsFeature -Name Web-Server -IncludeAllSubFeature -IncludeManagementTools"
-    }
-  SETTINGS
-}
 
 # Generate random text for a unique storage account name
 resource "random_id" "random_id" {
