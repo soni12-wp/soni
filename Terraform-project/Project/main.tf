@@ -90,7 +90,7 @@ data "aws_ami" "ubuntu" {
 }
 resource "aws_key_pair" "ubuntu" {
   key_name   = "new-key"
-  public_key = file("Terraform-porject/Porject/id_rsa.pub")
+  public_key = file("Terraform-project/Project/id_rsa.pub")
 }
 resource "aws_instance" "project" {
   instance_type               = "t3.micro"
