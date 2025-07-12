@@ -75,7 +75,30 @@ resource "aws_security_group" "security" {
   }
 
 }
-data "aws_ami" "ubuntu" {
+data "aws_ami" "windows" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "windows-vm"
+    values = ["Windows_Server-2022-English-Full-Base-*"]  
+  }
+}
+# Create the EC2 instance
+resource "aws_instance" "windows_server" {
+  ami                    = data.aws_ami.windows.id
+  instance_type          = "t2.medium"
+  key_name               = "your-key-pair" # Replace with your key pair name
+  vpc_security_group_ids = [aws_security_group.windows_server_sg.id]
+  tags = {
+    Name = "Windows Server"
+  }
+}
+
+output "public_ip" {
+  value = aws_instance.windows_server.public_ip
+}
+/*data "aws_ami" "ubuntu" {
   most_recent = true
   owners      = ["099720109477"]
   filter {
@@ -105,4 +128,4 @@ resource "aws_instance" "project" {
 output "print" {
   value = aws_instance.project.public_ip
   description = "public ip"
-}
+}*/
