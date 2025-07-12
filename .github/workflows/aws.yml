@@ -1,7 +1,7 @@
 name: Terraform pipeline for AWS
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "none" ]
 
 env:
   AWS_REGION: MY_AWS_REGION                   
