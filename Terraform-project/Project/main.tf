@@ -75,18 +75,9 @@ resource "aws_security_group" "security" {
   }
 
 }
-data "aws_ami" "windows" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "windows-vm"
-    values = ["Windows_Server-2022-English-Full-Base-*"]  
-  }
-}
 # Create the EC2 instance
 resource "aws_instance" "windows_server" {
-  ami                    = data.aws_ami.windows.id
+  ami                    = "ami-003de1e13988573dd"
   instance_type          = "t2.medium"
   vpc_security_group_ids = [aws_security_group.security.id]
   tags = {
