@@ -88,8 +88,7 @@ data "aws_ami" "windows" {
 resource "aws_instance" "windows_server" {
   ami                    = data.aws_ami.windows.id
   instance_type          = "t2.medium"
-  key_name               = "your-key-pair" # Replace with your key pair name
-  vpc_security_group_ids = [aws_security_group.windows_server_sg.id]
+  vpc_security_group_ids = [aws_security_group.security.id]
   tags = {
     Name = "Windows Server"
   }
