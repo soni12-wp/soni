@@ -90,8 +90,8 @@ output "public_ip" {
 }
 variable "ssh_private_key" {
  description = "ssh key for login"
- type = "string"
- sensitive = "true"
+ type = string
+ sensitive = true
 }
 data "aws_ami" "ubuntu" {
   most_recent = true
