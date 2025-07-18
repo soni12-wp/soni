@@ -40,14 +40,14 @@ jobs:
         run: terraform  plan -input=false
         working-directory:  Terraform-project/Project
         env:
-          TF_VAR_ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          TF_VAR_ssh_private_key: ${{ secrets.SSH_PUBLIC_KEY }}
 # Apply the plan if apply parameter selected during run.
       - name: Terraform Apply
         #if: ${{ github.event.inputs.TFACTION == 'apply' }}
         run: terraform  apply --auto-approve -input=false
         working-directory:  Terraform-project/Project
         env:
-          TF_VAR_ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          TF_VAR_ssh_private_key: ${{ secrets.SSH_PUBLIC_KEY }}
 # Destroy the infra if destroy parameter selected during run.
       - name: Terraform Destroy
         if: ${{ github.event.inputs.TFACTION == 'destroy' }}
