@@ -30,28 +30,20 @@ jobs:
         with:
           terraform_version: 1.8.0
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-      - name: write ssh key to file
-        run:
-          echo "$ {{ secrets.SSH_PUBLIC_KEY }}" > Terraform-project/Project/id_rsa.pub
-          chmod 644 Terraform-project/Project/id_rsa.pub
-# Initialize terraform
+      # Initialize terraform
       - name: Terraform Init
         run: terraform  init -reconfigure
         working-directory: Terraform-project/Project # this is directory where all terraform files are
 
 # Generates an execution plan for Terraform
       - name: Terraform Plan
-        run: terraform  plan -input=false
+        run: terraform  plan -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}"
         working-directory:  Terraform-project/Project
-        env:
-          TF_VAR_ssh_private_key: ${{ secrets.SSH_PUBLIC_KEY }}
 # Apply the plan if apply parameter selected during run.
       - name: Terraform Apply
         #if: ${{ github.event.inputs.TFACTION == 'apply' }}
-        run: terraform  apply --auto-approve -input=false
+        run: terraform  apply --auto-approve -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}"
         working-directory:  Terraform-project/Project
-        env:
-          TF_VAR_ssh_private_key: ${{ secrets.SSH_PUBLIC_KEY }}
 # Destroy the infra if destroy parameter selected during run.
       - name: Terraform Destroy
         if: ${{ github.event.inputs.TFACTION == 'destroy' }}
