@@ -88,7 +88,7 @@ resource "aws_instance" "windows_server" {
 output "public_ip" {
   value = aws_instance.windows_server.public_ip
 }
-variable "SSH_PUBLIC_KEY" {
+variable "ssh_public_key" {
  description = "ssh key for login"
  type = string
  sensitive = true
@@ -108,7 +108,7 @@ data "aws_ami" "ubuntu" {
 }
 resource "aws_key_pair" "sshkey" {
   key_name   = "sshkey"
-  public_key = file(var.SSH_PUBLIC_KEY)
+  public_key = var.ssh_public_key
 }
 resource "aws_instance" "project" {
   instance_type               = "t3.micro"
