@@ -1,7 +1,7 @@
 name: Terraform pipeline for AWS
 on:
   push:
-    branches: [ "none" ]
+    branches: [ "master" ]
 
 env:
   AWS_REGION: MY_AWS_REGION                   
@@ -39,11 +39,15 @@ jobs:
       - name: Terraform Plan
         run: terraform  plan -input=false
         working-directory:  Terraform-project/Project
+        env:
+          TF_VAR_ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
 # Apply the plan if apply parameter selected during run.
       - name: Terraform Apply
         #if: ${{ github.event.inputs.TFACTION == 'apply' }}
         run: terraform  apply --auto-approve -input=false
         working-directory:  Terraform-project/Project
+        env:
+          TF_VAR_ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
 # Destroy the infra if destroy parameter selected during run.
       - name: Terraform Destroy
         if: ${{ github.event.inputs.TFACTION == 'destroy' }}
