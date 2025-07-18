@@ -42,6 +42,10 @@ resource "aws_subnet" "main" {
 resource "aws_internet_gateway" "internet" {
   vpc_id = local.aws_vpc_cidr
   tags   = local.tags
+lifecycle {
+    prevent_destroy = true
+  }
+}
 
 }
 resource "aws_route_table" "table" {
