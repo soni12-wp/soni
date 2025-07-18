@@ -88,7 +88,12 @@ resource "aws_instance" "windows_server" {
 output "public_ip" {
   value = aws_instance.windows_server.public_ip
 }
-/*data "aws_ami" "ubuntu" {
+variable "ssh_private_key" {
+ description = "ssh key for login"
+ type = "string"
+ sensitive = "true"
+}
+data "aws_ami" "ubuntu" {
   most_recent = true
   owners      = ["099720109477"]
   filter {
@@ -101,9 +106,9 @@ output "public_ip" {
   }
 
 }
-resource "aws_key_pair" "ubuntu" {
-  key_name   = "new-key"
-  public_key = file("Terraform-project/Project/id_rsa.pub")
+resource "aws_key_pair" "ssh-key" {
+  key_name   = "login-key"
+  public_key = var.ssh_private_key
 }
 resource "aws_instance" "project" {
   instance_type               = "t3.micro"
@@ -118,4 +123,4 @@ resource "aws_instance" "project" {
 output "print" {
   value = aws_instance.project.public_ip
   description = "public ip"
-}*/
+}
