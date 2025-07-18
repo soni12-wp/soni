@@ -44,7 +44,6 @@ resource "aws_internet_gateway" "internet" {
   tags   = local.tags
 }
 
-}
 resource "aws_route_table" "table" {
   vpc_id = local.aws_vpc_cidr
   route {
