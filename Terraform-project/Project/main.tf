@@ -78,7 +78,7 @@ resource "aws_security_group" "security" {
 # Create the EC2 instance
 resource "aws_instance" "windows_server" {
   ami                    = "ami-003de1e13988573dd"
-  instance_type          = "t2.medium"
+  instance_type          = "t3.medium"
   vpc_security_group_ids = [aws_security_group.security.id]
   tags = {
     Name = "Windows Server"
