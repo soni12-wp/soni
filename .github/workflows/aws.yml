@@ -32,7 +32,6 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: write ssh key to file
         run:
-          mkdir -p ~/.ssh
           echo "$ {{ secrets.SSH_PUBLIC_KEY }}" > Terraform-project/Project/id_rsa.pub
           chmod 644 Terraform-project/Project/id_rsa.pub
 # Initialize terraform
