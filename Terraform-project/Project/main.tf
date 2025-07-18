@@ -108,7 +108,7 @@ data "aws_ami" "ubuntu" {
 }
 resource "aws_key_pair" "sshkey" {
   key_name   = "sshkey"
-  public_key = var.SSH_PUBLIC_KEY
+  public_key = file(var.SSH_PUBLIC_KEY)
 }
 resource "aws_instance" "project" {
   instance_type               = "t3.micro"
