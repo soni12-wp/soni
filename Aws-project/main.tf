@@ -27,7 +27,7 @@ id = "sg-07d541efebb4806fb"
 }
 resource "aws_subnet" "public_subnet" {
   vpc_id     = data.aws_vpc.existing_vpc.id
-  cidr_block = "172.31.28.0/20"
+  cidr_block = "172.31.48.0/20"
   availability_zone = "eu-north-1c"
   map_public_ip_on_launch = true
 
