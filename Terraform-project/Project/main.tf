@@ -17,9 +17,9 @@ provider "aws" {
 
 }
 locals {
-  aws_vpc_cidr = "192.168.0.0/16"
+  aws_vpc_cidr = "172.16.0.0/16"
 
-  tags = { Name = "New-Project" }
+  tags = { Name = "AwS-Terraform" }
 }
 resource "aws_vpc" "main" {
   cidr_block           = local.aws_vpc_cidr
@@ -39,7 +39,7 @@ resource "aws_subnet" "main" {
   availability_zone = each.value
 
 }
-resource "aws_internet_gateway" "internet" {
+resource "aws_internet_gateway" "Igateway" {
   vpc_id = local.aws_vpc_cidr
   tags   = local.tags
 }
@@ -48,7 +48,7 @@ resource "aws_route_table" "table" {
   vpc_id = local.aws_vpc_cidr
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.internet.id
+    gateway_id = aws_internet_gateway.Igateway.id
   }
   tags = local.tags
 
