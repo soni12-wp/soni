@@ -16,51 +16,45 @@ provider "aws" {
   region = "eu-north-1"
 
 }
-locals {
-  aws_vpc_cidr = "10.0.0.0/16"
-
-  tags = { Name = "AwS-Terraform" }
+data "aws_vpc" "existing_vpc" {
+  id = "vpc-07082110c2c86e16f"
 }
-resource "aws_vpc" "main" {
-  cidr_block           = local.aws_vpc_cidr
-  enable_dns_support   = true
-  enable_dns_hostnames = true
-  tags                 = local.tags
+data "aws_internet_gateway" "existing_igw" {
+  internet_gateway_id = "igw-08b1242dac7a67d3d"
 }
-
-data "aws_availability_zones" "available" {
-  state = "available"
-
+data "aws_security_group" "existing_sg" {
+id = "sg-07d541efebb4806fb"
 }
-resource "aws_subnet" "main" {
-  for_each          = toset(data.aws_availability_zones.available.names)
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = cidrsubnet(local.aws_vpc_cidr, 6, index(data.aws_availability_zones.available.names, each.value))
-  availability_zone = each.value
+resource "aws_subnet" "public_subnet" {
+  vpc_id     = data.aws_vpc.existing_vpc.id
+  cidr_block = "10.0.1.0/24"
+  availability_zone = "eu-north-1"
+  map_public_ip_on_launch = true
 
-}
-resource "aws_internet_gateway" "Igateway" {
-  vpc_id = local.aws_vpc_cidr
-  tags   = local.tags
+  tags = {
+    Name = "public_subnet"
+  }
 }
 
-resource "aws_route_table" "table" {
-  vpc_id = local.aws_vpc_cidr
+resource "aws_route_table" "public_route_table" {
+  vpc_id = data.aws_vpc.existing_vpc.id
+
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.Igateway.id
+    gateway_id = data.aws_internet_gateway.existing_igw.id
   }
-  tags = local.tags
 
+  tags = {
+    Name = "public_route_table"
+  }
 }
-resource "aws_route_table_association" "main" {
-  for_each       = aws_subnet.main
-  subnet_id      = each.value.id
-  route_table_id = aws_route_table.table.id
 
+resource "aws_route_table_association" "public_subnet_association" {
+  subnet_id      = aws_subnet.public_subnet.id
+  route_table_id = aws_route_table.public_route_table.id
 }
-resource "aws_security_group" "security" {
-  vpc_id = aws_vpc.main.id
+resource "aws_security_group" "existing_sg" {
+  vpc_id = data.aws_vpc.existing_vpc.id
   ingress {
     from_port   = 0
     to_port     = 0
@@ -79,7 +73,7 @@ resource "aws_security_group" "security" {
 resource "aws_instance" "windows_server" {
   ami                    = "ami-0b59aaac1a4f1a3d1"
   instance_type          = "t3.micro"
-  vpc_security_group_ids = [aws_security_group.security.id]
+  vpc_security_group_ids = [data.aws_security_group.existing_sg.id]
   tags = {
     Name = "Windows Server"
   }
@@ -110,14 +104,16 @@ resource "aws_key_pair" "sshkey" {
   key_name   = "sshkey"
   public_key = var.ssh_public_key
 }
-resource "aws_instance" "project" {
+resource "aws_instance" "ubuntu-vm" {
   instance_type               = "t3.micro"
   ami                         = data.aws_ami.ubuntu.id
   key_name                    = aws_key_pair.sshkey.key_name
-  subnet_id                   = values(aws_subnet.main)[0].id
+  subnet_id                   = values(aws_subnet.public_subnet)[0].id
   associate_public_ip_address = true
 
-  tags = local.tags
+  tags {
+   name = "ubuntu Instance"
+  }
 
 }
 output "print" {
