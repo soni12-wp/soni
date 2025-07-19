@@ -111,12 +111,12 @@ resource "aws_instance" "ubuntu-vm" {
   subnet_id                   = values(aws_subnet.public_subnet)[0].id
   associate_public_ip_address = true
 
-  tags {
+  tags = {
    name = "ubuntu Instance"
   }
 
 }
 output "print" {
-  value = aws_instance.project.public_ip
+  value = aws_instance.ubuntu-vm.public_ip
   description = "public ip"
 }
