@@ -28,7 +28,7 @@ id = "sg-07d541efebb4806fb"
 resource "aws_subnet" "public_subnet" {
   vpc_id     = data.aws_vpc.existing_vpc.id
   cidr_block = "10.0.1.0/24"
-  availability_zone = "eu-north-1"
+  availability_zone = "eu-north-1c"
   map_public_ip_on_launch = true
 
   tags = {
@@ -100,8 +100,8 @@ data "aws_ami" "ubuntu" {
   }
 
 }
-resource "aws_key_pair" "sshkey" {
-  key_name   = "sshkey"
+resource "aws_key_pair" "login-key" {
+  key_name   = "login-key"
   public_key = var.ssh_public_key
 }
 resource "aws_instance" "ubuntu-vm" {
