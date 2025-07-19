@@ -108,7 +108,7 @@ resource "aws_instance" "ubuntu-vm" {
   instance_type               = "t3.micro"
   ami                         = data.aws_ami.ubuntu.id
   key_name                    = aws_key_pair.sshkey.key_name
-  subnet_id                   = values(aws_subnet.public_subnet)[0].id
+  subnet_id                   = aws_subnet.public_subnet.id
   associate_public_ip_address = true
 
   tags = {
