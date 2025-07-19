@@ -107,7 +107,7 @@ resource "aws_key_pair" "login-key" {
 resource "aws_instance" "ubuntu-vm" {
   instance_type               = "t3.micro"
   ami                         = data.aws_ami.ubuntu.id
-  key_name                    = aws_key_pair.sshkey.key_name
+  key_name                    = aws_key_pair.login-key.key_name
   subnet_id                   = aws_subnet.public_subnet.id
   associate_public_ip_address = true
 
