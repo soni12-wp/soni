@@ -33,19 +33,19 @@ jobs:
       # Initialize terraform
       - name: Terraform Init
         run: terraform  init -reconfigure
-        working-directory: Terraform-project/Project # this is directory where all terraform files are
+        working-directory: Aws-project # this is directory where all terraform files are
 
 # Generates an execution plan for Terraform
       - name: Terraform Plan
         run: terraform  plan -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}"
-        working-directory:  Terraform-project/Project
+        working-directory:  Aws-project
 # Apply the plan if apply parameter selected during run.
       - name: Terraform Apply
         #if: ${{ github.event.inputs.TFACTION == 'apply' }}
         run: terraform  apply --auto-approve -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}"
-        working-directory:  Terraform-project/Project
+        working-directory:  Aws-project
 # Destroy the infra if destroy parameter selected during run.
       - name: Terraform Destroy
         if: ${{ github.event.inputs.TFACTION == 'destroy' }}
         run: terraform destroy --auto-approve -input=false
-        working-directory:  Terraform-project/Project
+        working-directory:  Aws-project
