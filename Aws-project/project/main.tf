@@ -29,7 +29,7 @@ resource "null_resource" "remotelogin" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt update",
-      "sudo apt install http -y",
+      "sudo apt install apache -y",
       "sudo systemctl enable httpd",
       "sudo systemctl start httpd",
       "echo 'This is apache web server on ubuntu' > /var/www/html/index.html",
