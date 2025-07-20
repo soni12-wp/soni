@@ -1,5 +1,5 @@
 
-resource "aws_s3_bucket" "myshayan" {
+/*resource "aws_s3_bucket" "myshayan" {
   bucket = "myshayan"
 
   versioning {
@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "myshayan" {
     bucket = "myshayan"
     key    = "terraform.tfstate"
     region = "eu-north-1"
-  }
+  }*/
 
   required_providers {
     aws = {
