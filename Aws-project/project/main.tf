@@ -29,10 +29,11 @@ resource "null_resource" "remotelogin" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt update",
-      "sudo apt install nginx -y",
-      "sudo systemctl enable nginx",
-      "sudo systemctl start nginx",
-      "echo This is Nginx server on ubuntu > /var/www/html/index.html",
+      "sudo apt install http -y",
+      "sudo systemctl enable httpd",
+      "sudo systemctl start httpd",
+      "echo 'This is apache web server on ubuntu' > /var/www/html/index.html",
+      "chmod 644 /var/ww/html/index.html"
     ]
 
     connection {
