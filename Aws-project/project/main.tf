@@ -1,4 +1,11 @@
-terraform {
+
+resource "aws_s3_bucket" "myshayan" {
+  bucket = "myshayan"
+
+  versioning {
+    enabled = true
+  }
+  terraform {
   backend "s3" {
     bucket = "myshayan"
     key    = "terraform.tfstate"
