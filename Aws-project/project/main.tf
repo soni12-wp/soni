@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "shayanbook"
+    bucket = "myshayan"
     key    = "terraform.tfstate"
     region = "eu-north-1"
   }
@@ -29,7 +29,7 @@ resource "null_resource" "remotelogin" {
       "sudo apt install nginx -y",
       "sudo systemctl enable nginx",
       "sudo systemctl start nginx",
-      "echo "This is Nginx server on ubuntu" > /var/www/html/index.html"
+      "echo This is Nginx server on ubuntu > /var/www/html/index.html",
     ]
 
     connection {
