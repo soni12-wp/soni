@@ -32,13 +32,13 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       # Initialize terraform
       - name: Terraform Init
-        run: terraform  init -reconfigure
+        run: terraform  init
         working-directory: Aws-project/project # this is directory where all terraform files are
 
 # Generates an execution plan for Terraform
       - name: Terraform Plan
         run: terraform  plan -var="ssh_private_key=${{ secrets.SSH_PRIVATE_KEY }}"
-        working-directory:  Aws-project
+        working-directory:  Aws-project/project
 # Apply the plan if apply parameter selected during run.
       - name: Terraform Apply
         #if: ${{ github.event.inputs.TFACTION == 'apply' }}

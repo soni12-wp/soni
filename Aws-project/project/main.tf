@@ -1,26 +1,20 @@
 
-/*resource "aws_s3_bucket" "myshayan" {
-  bucket = "myshayan"
 
-  versioning {
-    enabled = true
-  }
-}
   terraform {
   backend "s3" {
     bucket = "myshayan"
     key    = "terraform.tfstate"
     region = "eu-north-1"
-  }*/
+  }
+  }
 
-terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
       version = "5.94.1"
     }
   }
-}
+
 provider "aws" {
   region = "eu-north-1"
 
