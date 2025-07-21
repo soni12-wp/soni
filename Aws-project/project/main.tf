@@ -31,7 +31,7 @@ resource "null_resource" "remotelogin" {
       "sudo apt install apache2 -y",
       "sudo systemctl start apache2",
       "sudo echo 'This is apache web server on ubuntu' > /var/www/html/index.html",
-      "chmod 644 /var/ww/html/index.html"
+      "sudo chmod 644 /var/ww/html/index.html"
     ]
 
     connection {
