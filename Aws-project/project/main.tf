@@ -28,9 +28,7 @@ resource "null_resource" "remotelogin" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt update",
       "sudo apt install apache2 -y",
-      "sudo systemctl enable apache2",
       "sudo systemctl start apache2",
       "echo 'This is apache web server on ubuntu' > /var/www/html/index.html",
       "chmod 644 /var/ww/html/index.html"
