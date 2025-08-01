@@ -1,0 +1,28 @@
+# .dockerignore
+
+# Ignore Maven target directory
+target/
+
+# Ignore Maven local repository
+.m2/
+
+# Ignore IDE specific files
+*.idea/
+*.vscode/
+*.iml
+
+# Ignore OS generated files
+.DS_Store
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+
+# Ignore node_modules if any
+node_modules/
+
+# Ignore other unnecessary files
+*.swp
+*.bak
+*.old
+*.orig
